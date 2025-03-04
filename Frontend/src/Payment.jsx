@@ -6,7 +6,7 @@ const PaymentPage = () => {
     try {
       const { data } = await axios.post("https://payment-gateway-sable.vercel.app/generate-upi-link", {
         provider,
-        amount: 1, // Example amount
+        amount: 10, // Example amount
       });
 
       if (data.paymentUrl) {
