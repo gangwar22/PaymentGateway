@@ -4,7 +4,7 @@ import axios from "axios";
 const PaymentPage = () => {
   const initiatePayment = async (provider) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/generate-upi-link", {
+      const { data } = await axios.post("https://payment-gateway-sable.vercel.app/generate-upi-link", {
         provider,
         amount: 100, // Example amount
       });
