@@ -6,7 +6,7 @@ const PaymentPage = () => {
     try {
       const { data } = await axios.post("https://payment-gateway-sable.vercel.app/generate-upi-link", {
         provider,
-        amount: 10, // Example amount
+        amount: 100, // Example amount
       });
 
       if (data.paymentUrl) {
@@ -16,8 +16,9 @@ const PaymentPage = () => {
         // Wait for 3 seconds to check if the app opened
         setTimeout(() => {
           if (document.visibilityState === "visible") {
-            // If the page is still open, redirect to download
-            redirectToDownload(provider);
+            // If the app didn't open, do NOT show download page (user already has app)
+            console.log("App not opened. Check UPI limit or try a different amount.");
+            alert("Payment app didn't open. Check UPI limit or try a smaller amount.");
           }
         }, 3000);
       } else {
@@ -27,17 +28,6 @@ const PaymentPage = () => {
       console.error("Payment Error:", error);
       alert("Error initiating payment");
     }
-  };
-
-  // Redirect to App Download Page if app is not installed
-  const redirectToDownload = (provider) => {
-    const downloadLinks = {
-      gpay: "https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user",
-      phonepe: "https://play.google.com/store/apps/details?id=com.phonepe.app",
-      paytm: "https://play.google.com/store/apps/details?id=net.one97.paytm",
-    };
-
-    window.location.href = downloadLinks[provider] || "https://play.google.com";
   };
 
   return (
