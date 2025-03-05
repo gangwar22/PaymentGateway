@@ -6,24 +6,21 @@ const PaymentPage = () => {
 
   const initiatePayment = async (provider) => {
     try {
-      setLoading(true); // Show loading state while generating the payment link
+      setLoading(true); // Show loading state
       const { data } = await axios.post("https://payment-gateway-sable.vercel.app/generate-upi-link", {
         provider,
         amount: 10, // Example amount
       });
 
       if (data.paymentUrl) {
-        // Try opening the UPI link
-        window.location.href = data.paymentUrl;
+        window.location.href = data.paymentUrl; // Open UPI link
 
-        // Wait for 3 seconds to check if the app opened
+        // Check if the app opened within 3 seconds
         setTimeout(() => {
           if (document.visibilityState === "visible") {
-            // If the page is still visible, suggest downloading the app
             alert("It seems the app is not installed. Redirecting to the app store.");
             redirectToDownload(provider);
           } else {
-            // The UPI app opened successfully
             alert("Please complete your payment in the app.");
           }
         }, 3000);
@@ -34,7 +31,7 @@ const PaymentPage = () => {
       console.error("Payment Error:", error);
       alert("Error initiating payment");
     } finally {
-      setLoading(false); // Hide loading state after processing
+      setLoading(false);
     }
   };
 
@@ -45,7 +42,6 @@ const PaymentPage = () => {
       phonepe: "https://play.google.com/store/apps/details?id=com.phonepe.app",
       paytm: "https://play.google.com/store/apps/details?id=net.one97.paytm",
     };
-
     window.location.href = downloadLinks[provider] || "https://play.google.com";
   };
 

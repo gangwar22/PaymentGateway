@@ -20,9 +20,9 @@ app.post("/generate-upi-link", (req, res) => {
   const transactionId = "ORDER" + Date.now();
 
   const deepLinks = {
-    paytm: `upi://pay?pa=${UPI_ID}&pn=${payeeName}&mc=&tid=${transactionId}&tr=${transactionId}&tn=Payment&am=${amount}&cu=INR`,
-    gpay: `upi://pay?pa=${UPI_ID}&pn=${payeeName}&tid=${transactionId}&tr=${transactionId}&tn=Payment&am=${amount}&cu=INR`,
-    phonepe: `upi://pay?pa=${UPI_ID}&pn=${payeeName}&mc=&tid=${transactionId}&tr=${transactionId}&tn=Payment&am=${amount}&cu=INR`,
+    paytm: `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(payeeName)}&mc=0000&tid=${transactionId}&tr=${transactionId}&tn=Payment&am=${amount}&cu=INR`,
+    gpay: `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(payeeName)}&mc=0000&tid=${transactionId}&tr=${transactionId}&tn=Payment&am=${amount}&cu=INR`,
+    phonepe: `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(payeeName)}&mc=0000&tid=${transactionId}&tr=${transactionId}&tn=Payment&am=${amount}&cu=INR`,
   };
 
   const paymentUrl = deepLinks[provider];
